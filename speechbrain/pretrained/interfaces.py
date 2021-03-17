@@ -707,6 +707,10 @@ class SepformerSeparation(Pretrained):
         path = fetch(fl, source=source, savedir=savedir)
 
         batch, _ = torchaudio.load(path)
+        
+        # eric fix
+        batch = batch.to(self.device)
+        
         est_sources = self.separate_batch(batch)
         est_sources = est_sources / est_sources.max(dim=1, keepdim=True)[0]
         return est_sources
